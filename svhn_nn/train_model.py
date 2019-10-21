@@ -74,3 +74,4 @@ print('Finished Training')
 
 PATH = './svhn_net.pth'
 torch.save(net.state_dict(), PATH)
+
