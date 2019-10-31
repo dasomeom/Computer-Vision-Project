@@ -11,9 +11,10 @@ transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-trainset = torchvision.datasets.SVHN(root='../../data',split='train', transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
+trainset = torchvision.datasets.SVHN(root='../../data', split='train', transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=64,
                                           shuffle=True, num_workers=2)
+
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -65,7 +66,7 @@ for epoch in range(2):  # loop over the dataset multiple times
 
         # print statistics
         running_loss += loss.item()
-        if i % 2000 == 1999:    # print every 2000 mini-batches
+        if i % 2000  == 1999:    # print every 2000 mini-batches
             print('[%d, %5d] loss: %.3f' %
                   (epoch + 1, i + 1, running_loss / 2000))
             running_loss = 0.0
