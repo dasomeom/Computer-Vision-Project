@@ -6,9 +6,9 @@ import os
 import torch
 import torch.optim as optim
 from torchvision import datasets, transforms
-from src.model import *
-from src.train import *
-from src.test import *
+from model import *
+from train import *
+from test import *
 from time import time
 import math
 
@@ -37,6 +37,8 @@ def main():
                         help='random seed (default: 1)')
     argparser.add_argument('--log-interval', type=int, default=10, metavar='N',
                         help='how many batches to wait before logging training status')
+    argparser.add_argument('--save_model', type=bool, default=True, 
+                        help='save model')
     args = argparser.parse_args()
 
     if args.cuda:
@@ -64,11 +66,11 @@ def main():
 
     model = CNN().to(device)
     optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)
-    start = time.time()
+    start = time()
 
     try:
         for epoch in range(1, args.epochs + 1):
-            print("Training for %d epochs..." % args.n_epochs)
+            print("Training for %d epochs..." % args.epochs)
             train(args, model, device, train_loader, optimizer, epoch)
             test(args, model, device, test_loader)
 
