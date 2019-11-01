@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2e8143d-6241-4fb3-8341-f7c93d03e220" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/inference.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mnist_cnn.pt" beforeDir="false" afterPath="$PROJECT_DIR$/src/mnist_cnn.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/train.py" afterDir="false" />
+    <list default="true" id="c2e8143d-6241-4fb3-8341-f7c93d03e220" name="Default Changelist" comment="SVHN works now">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -108,6 +103,7 @@
       <updated>1571689853266</updated>
       <workItem from="1572369201219" duration="5252000" />
       <workItem from="1572573753379" duration="5659000" />
+      <workItem from="1572580313013" duration="270000" />
     </task>
     <task id="LOCAL-00001" summary="inference file that prints prediction and shows the output">
       <created>1572376480534</created>
@@ -116,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572376480534</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="SVHN works now">
+      <created>1572580326620</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1572580326620</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +140,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="inference file that prints prediction and shows the output" />
-    <option name="LAST_COMMIT_MESSAGE" value="inference file that prints prediction and shows the output" />
+    <MESSAGE value="SVHN works now" />
+    <option name="LAST_COMMIT_MESSAGE" value="SVHN works now" />
   </component>
 </project>
