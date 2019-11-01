@@ -13,25 +13,26 @@ def inference(use_cuda, model_path):
     model.load_state_dict(torch.load(model_path))
     model.eval()
 
-    # test_loader = torch.utils.data.DataLoader(
-    #     datasets.MNIST('../data', train=False, transform=transforms.Compose([
-    #         transforms.ToTensor(),
-    #         transforms.Normalize((0.1307,), (0.3081,))
-    #     ])),
-    #     batch_size=1, shuffle=True)
-
     test_loader = torch.utils.data.DataLoader(
-        datasets.SVHN('../data', split='test', download=True,
-                      transform=transforms.Compose([
-                          transforms.CenterCrop(28),
-                          transforms.Grayscale(),
-                          transforms.ToTensor()
-                      ])),
+        datasets.MNIST('../data', train=False, transform=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])),
         batch_size=1, shuffle=True)
+
+    # test_loader = torch.utils.data.DataLoader(
+    #     datasets.SVHN('../data', split='test', download=True,
+    #                   transform=transforms.Compose([
+    #                       transforms.CenterCrop(28),
+    #                       transforms.Grayscale(),
+    #                       transforms.ToTensor()
+    #                   ])),
+    #     batch_size=1, shuffle=True)
 
     with torch.no_grad():
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
+            print(data.shape)
             output = model(data)
             pred = output.argmax(dim=1, keepdim=True)
             print(pred[0])
@@ -44,7 +45,7 @@ def main():
                         help='enables CUDA training')
     argparser.add_argument('--seed', type=int, default=1, metavar='S',
                         help='random seed (default: 1)')
-    argparser.add_argument('--model_path', type=str, default="SVHN_cnn.pt",
+    argparser.add_argument('--model_path', type=str, default="MNIST_cnn.pt",
                         help='path of saved model')
 
     args = argparser.parse_args()
