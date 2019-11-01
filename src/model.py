@@ -19,3 +19,18 @@ class CNN(nn.Module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return F.log_softmax(x, dim=1)
+
+class SVHN(nn.Module):
+    def __init__(self, features, n_channel, num_classes):
+        super(SVHN, self).__init__()
+        assert isinstance(features, nn.Sequential), type(features)
+        self.features = features
+        self.classifier = nn.Sequential(
+            nn.Linear(n_channel, num_classes)
+        )
+
+    def forward(self, x):
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        x = self.classifier(x)
+        return x

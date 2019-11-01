@@ -5,8 +5,10 @@ def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
+        # print(data.shape)
         optimizer.zero_grad()
         output = model(data)
+        # print(output.shape)
         loss = F.nll_loss(output, target)
         loss.backward()
         optimizer.step()
