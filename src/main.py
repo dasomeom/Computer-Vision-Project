@@ -12,11 +12,13 @@ from test import *
 from time import time
 import math
 
+
 def time_since(since):
     s = time.time() - since
     m = math.floor(s / 60)
     s -= m * 60
     return '%dm %ds' % (m, s)
+
 
 def main():
     # Parse command line arguments
@@ -39,6 +41,8 @@ def main():
                         help='how many batches to wait before logging training status')
     argparser.add_argument('--save_model', type=bool, default=True, 
                         help='save model')
+    argparser.add_argument('--dataset', type=str, default="SVHN",
+                           help='use MNIST or SVHN')
     args = argparser.parse_args()
 
     if args.cuda:
@@ -49,20 +53,42 @@ def main():
     kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
     device = torch.device("cuda" if use_cuda else "cpu")
 
-    train_loader = torch.utils.data.DataLoader(
-        datasets.MNIST('../data', train=True, download=True,
-                       transform=transforms.Compose([
-                           transforms.ToTensor(),
-                           transforms.Normalize((0.1307,), (0.3081,))
-                       ])),
-        batch_size=args.batch_size, shuffle=True, **kwargs)
+    if args.dataset == "MNIST":
+        train_loader = torch.utils.data.DataLoader(
+            datasets.MNIST('../data', train=True, download=True,
+                           transform=transforms.Compose([
+                               transforms.ToTensor(),
+                               transforms.Normalize((0.1307,), (0.3081,))
+                           ])),
+            batch_size=args.batch_size, shuffle=True, **kwargs)
 
-    test_loader = torch.utils.data.DataLoader(
-        datasets.MNIST('../data', train=False, transform=transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize((0.1307,), (0.3081,))
-        ])),
-        batch_size=args.test_batch_size, shuffle=True, **kwargs)
+        test_loader = torch.utils.data.DataLoader(
+            datasets.MNIST('../data', train=False, transform=transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize((0.1307,), (0.3081,))
+            ])),
+            batch_size=args.test_batch_size, shuffle=True, **kwargs)
+
+    #Crops the given PIL Image at the center.
+    else:
+        train_loader = torch.utils.data.DataLoader(
+            datasets.SVHN('../data', split='train', download=True,
+                          transform=transforms.Compose([
+                              transforms.CenterCrop(28),
+                              transforms.Grayscale(),
+                              transforms.ToTensor(),
+                              transforms.Normalize((0.1307,), (0.3081,))
+                          ])),
+            batch_size=args.batch_size, shuffle=True, **kwargs)
+        test_loader = torch.utils.data.DataLoader(
+            datasets.SVHN('../data', split='test', download=True,
+                          transform=transforms.Compose([
+                              transforms.CenterCrop(28),
+                              transforms.Grayscale(),
+                              transforms.ToTensor(),
+                              transforms.Normalize((0.1307,), (0.3081,))
+                          ])),
+            batch_size=args.test_batch_size, shuffle=True, **kwargs)
 
     model = CNN().to(device)
     optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)
@@ -75,11 +101,11 @@ def main():
             test(args, model, device, test_loader)
 
         if (args.save_model):
-            torch.save(model.state_dict(), "mnist_cnn.pt")
+            torch.save(model.state_dict(), args.dataset + "_cnn.pt")
 
     except KeyboardInterrupt:
         print("Saving before quit...")
-        torch.save(model.state_dict(), "mnist_cnn.pt")
+        torch.save(model.state_dict(), args.dataset + "_cnn.pt")
 
 
 if __name__ == '__main__':
