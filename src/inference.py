@@ -3,6 +3,7 @@ import torch
 from torchvision import datasets, transforms
 from model import *
 from train import *
+from webcam import *
 import matplotlib.pyplot as plt
 from imageio import imread, imsave
 
@@ -28,6 +29,35 @@ def infernece(use_cuda, model_path):
             plt.imshow(data.reshape(28, 28), cmap='Greys')
             plt.show()
 
+
+def test(use_cuda, model_path):
+    device = torch.device("cuda" if use_cuda else "cpu")
+
+    model = CNN().to(device)
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    test_loader = torch.utils.data.DataLoader(
+        datasets.MNIST('../data', train=False, transform=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])),
+        batch_size=1, shuffle=True)
+
+    with torch.no_grad():
+        for data, target in test_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+
+            _, argmax = output.max(-1)
+            print(argmax)
+            # pred = output.argmax(dim=1, keepdim=True).items()
+            plt.imshow(data.reshape(28, 28), cmap='Greys')
+            plt.show()
+
+
+
+
 def main():
     argparser = argparse.ArgumentParser(description='add args here')
     argparser.add_argument('--cuda', action='store_true', default=False,
@@ -43,7 +73,8 @@ def main():
     use_cuda = not args.cuda and torch.cuda.is_available()
     model_path = args.model_path
 
-    infernece(use_cuda, model_path)
+    #infernece(use_cuda, model_path)
+    test(use_cuda, model_path)
 
 if __name__ == '__main__':
     main()

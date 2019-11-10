@@ -1,13 +1,12 @@
 import cv2
+import numpy as np
 
-import numpy
 import argparse
 import torch
 from torchvision import datasets, transforms
 from model import *
 from train import *
 from webcam import *
-from PIL import Image
 import matplotlib.pyplot as plt
 
 
@@ -18,7 +17,6 @@ samplingRate = 10
 def webcam(use_cuda, model_path, mirror=False, ):
     cam = cv2.VideoCapture(0)
     counter = 0;
-
 
     device = torch.device("cuda" if use_cuda else "cpu")
 
@@ -34,23 +32,10 @@ def webcam(use_cuda, model_path, mirror=False, ):
         if mirror:
             img = cv2.flip(img, 1)
         cv2.imshow('my webcam', img)
-        img = img[80:400, 100:540]
-        cv2.imshow('cropped', img)
         # add sampling rate
         if counter == samplingRate:
-            # cv2.imshow('sampling', img)
+            cv2.imshow('sampling', img)
             img_out = img
-
-            # need to convert img_out to a 28, 28, 1 binary image
-            img_out = frameToBinary(img_out)
-
-            img_out = transform(img_out)
-            img_out = img_out[None];
-            plt.imshow(img_out.reshape(28, 28), cmap='Greys')
-            output = model(img_out)
-            _, argmax = output.max(-1)
-
-            print(argmax)
             counter = 0
         counter = counter + 1
 
@@ -58,23 +43,6 @@ def webcam(use_cuda, model_path, mirror=False, ):
             break  # esc to quit
     cv2.destroyAllWindows()
 
-def frameToBinary(img):
-    # convert to binary, segment image
-    # or get multiple image segments with possible numbers
-    # need blob detection or something to determine if number exists
-    # then apply directly
-
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #img = cv2.equalizeHist(img)
-    img = cv2.resize(img, (28,28))
-    cv2.imshow('sampling', img)
-    img = img.astype('float32')
-
-    img = img /255
-    img = 1 - img
-    img = img.reshape(28, 28, 1)
-    cv2.imshow('sampling', img)
-    return img
 
 def main():
     argparser = argparse.ArgumentParser(description='add args here')
