@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 
 # gets webcam data and displays it
-samplingRate = 10
+samplingRate = 20
 
 
 def webcam(use_cuda, model_path, mirror=False, ):
@@ -35,24 +35,40 @@ def webcam(use_cuda, model_path, mirror=False, ):
             img = cv2.flip(img, 1)
         cv2.imshow('my webcam', img)
         img = img[80:400, 100:540]
-        cv2.imshow('cropped', img)
+        #cv2.imshow('cropped', img)
+        #img = cv2.Canny(img, 80, 200)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        cv2.imshow('gray', img)
+
         # add sampling rate
         if counter == samplingRate:
             # cv2.imshow('sampling', img)
-            img_out = img
+            temp_img = img
+            list = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+            sum = 48
+            sha_0, sha_1 = img.shape
+            for i in range(3): # 0 - 160, 80 - 240, 160 - 320
+                for j in range(3): #
+                    #print(i , j)
+                    window = img[i * int(sha_0/3):i * int(sha_0/3) + int(sha_1/2), j * int(sha_1/3): j * int(sha_1/3) + int(sha_1/2)]
+                    #print(window.shape, " window")
+                    img_out = cv2.resize(window, (28,28))
+                    img_out = img_out.astype('float32')
+                    img_out = 1 - (img_out / 255)
+                    img_out = img_out.reshape(28, 28, 1)
 
+                    img_out = transform(img_out)
+                    img_out = img_out[None]
+                    plt.imshow(img_out.reshape(28, 28), cmap='Greys')
+                    output = model(img_out)
+                    _, argmax = output.max(-1)
+                    am = int(str(argmax).split("[")[1][0])
+                    list[am] += 1
             # need to convert img_out to a 28, 28, 1 binary image
-            img_out = frameToBinary(img_out)
-
-            img_out = transform(img_out)
-            img_out = img_out[None];
-            plt.imshow(img_out.reshape(28, 28), cmap='Greys')
-            output = model(img_out)
-            _, argmax = output.max(-1)
-
-            print(argmax)
+            print(list)
+            #print([k for k,v in list.items() if v >= (sum * .3)])
             counter = 0
-        counter = counter + 1
+        counter += 1
 
         if cv2.waitKey(1) == 27:
             break  # esc to quit
@@ -93,6 +109,9 @@ def main():
 
     #infernece(use_cuda, model_path)
     webcam(use_cuda, model_path)
+
+
+
 
 if __name__ == '__main__':
     main()
