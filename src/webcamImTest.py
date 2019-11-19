@@ -12,12 +12,14 @@ import matplotlib.pyplot as plt
 
 
 # gets webcam data and displays it
-samplingRate = 20
-
+samplingRate = 10
+arrayRate = 0
+run = 3
 
 def webcam(use_cuda, model_path, mirror=False, ):
     cam = cv2.VideoCapture(0)
-    counter = 0;
+    counter = 0
+    newCounter = 0
 
 
     device = torch.device("cuda" if use_cuda else "cpu")
@@ -33,7 +35,7 @@ def webcam(use_cuda, model_path, mirror=False, ):
         #img is an rgb array
         if mirror:
             img = cv2.flip(img, 1)
-        cv2.imshow('my webcam', img)
+        #cv2.imshow('my webcam', img)
         img = img[80:400, 100:540]
         #cv2.imshow('cropped', img)
         #img = cv2.Canny(img, 80, 200)
@@ -44,27 +46,49 @@ def webcam(use_cuda, model_path, mirror=False, ):
         if counter == samplingRate:
             # cv2.imshow('sampling', img)
             temp_img = img
-            list = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+            if arrayRate == newCounter:
+                list = {0:0, 1:0, 2:-2, 3:-2, 4:0, 5:0, 6:0, 7:0, 8:-2, 9:0}
+                newCounter = 0
+            newCounter += 1
+            list[8] -= 5
+            list[3] -= 3
             sum = 48
             sha_0, sha_1 = img.shape
-            for i in range(3): # 0 - 160, 80 - 240, 160 - 320
-                for j in range(3): #
-                    #print(i , j)
-                    window = img[i * int(sha_0/3):i * int(sha_0/3) + int(sha_1/2), j * int(sha_1/3): j * int(sha_1/3) + int(sha_1/2)]
-                    #print(window.shape, " window")
-                    img_out = cv2.resize(window, (28,28))
-                    img_out = img_out.astype('float32')
-                    img_out = 1 - (img_out / 255)
-                    img_out = img_out.reshape(28, 28, 1)
 
-                    img_out = transform(img_out)
-                    img_out = img_out[None]
-                    plt.imshow(img_out.reshape(28, 28), cmap='Greys')
-                    output = model(img_out)
-                    _, argmax = output.max(-1)
-                    am = int(str(argmax).split("[")[1][0])
-                    list[am] += 1
-            # need to convert img_out to a 28, 28, 1 binary image
+            ind = 1
+            for k in range(1, run + 1):
+                k_prime = (2 * k - 1)
+                start_x = int(0)
+                start_y = int(0)
+                end_x = int(sha_1/k)
+                end_y = int(sha_0/k)
+                diff_x = int(sha_1/(2 * k))
+                diff_y = int(sha_0/(2 * k))
+                for i in range(k_prime):
+                    for j in range(k_prime):
+                        window = img[start_y:end_y, start_x: end_x]
+                        img_out = cv2.resize(window, (28,28))
+                        img_out = img_out.astype('float32')
+                        img_out = 1 - (img_out / 255)
+                        img_out = img_out.reshape(28, 28, 1)
+
+                        img_out = transform(img_out)
+                        img_out = img_out[None]
+                        #plt.imshow(img_out.reshape(28, 28), cmap='Greys')
+                        ind += 1
+                        output = model(img_out)
+                        _, argmax = output.max(-1)
+                        #print(output, argmax)
+                        am = int(str(argmax).split("[")[1][0])
+                        list[am] += 1
+
+                        start_x += diff_x
+                        end_x += diff_x
+                    start_x = 0
+                    end_x = start_x + diff_x * 2
+                    start_y += diff_y
+                    end_y += diff_y
+
             print(list)
             #print([k for k,v in list.items() if v >= (sum * .3)])
             counter = 0
