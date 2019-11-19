@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="acc4709b-4859-4d86-98bc-c3d020d98fa4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/webcam.py" afterDir="false" />
+    <list default="true" id="acc4709b-4859-4d86-98bc-c3d020d98fa4" name="Default Changelist" comment="Added k-means discretization for recognition with MNIST">
+      <change afterPath="$PROJECT_DIR$/src/testCase.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/svhn_nn/svhn_testing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/svhn_nn/svhn_webcam_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/inference.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/digitFindTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/digitFindTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webcamImTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/webcamImTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svhn_nn/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/svhn_nn/test_model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +53,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.webcamImTest">
-    <configuration name="inference" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.testCase">
+    <configuration name="digitFindTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Computer-Vision-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -63,7 +66,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/inference.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/digitFindTest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -94,6 +97,48 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="svhn_testing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Computer-Vision-Project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/svhn_nn" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/svhn_nn/svhn_testing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="svhn_webcam_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Computer-Vision-Project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/svhn_nn" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/svhn_nn/svhn_webcam_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="svhnn_test" type="PythonConfigurationType" factoryName="Python">
       <module name="Computer-Vision-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -116,7 +161,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="webcam" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="testCase" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Computer-Vision-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -128,7 +173,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/webcam.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/testCase.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,15 +206,19 @@
     <list>
       <item itemvalue="Python.svhn_nn" />
       <item itemvalue="Python.svhnn_test" />
-      <item itemvalue="Python.inference" />
-      <item itemvalue="Python.webcam" />
       <item itemvalue="Python.webcamImTest" />
+      <item itemvalue="Python.digitFindTest" />
+      <item itemvalue="Python.svhn_webcam_test" />
+      <item itemvalue="Python.testCase" />
+      <item itemvalue="Python.svhn_testing" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.testCase" />
+        <item itemvalue="Python.svhn_testing" />
+        <item itemvalue="Python.svhn_webcam_test" />
+        <item itemvalue="Python.digitFindTest" />
         <item itemvalue="Python.webcamImTest" />
-        <item itemvalue="Python.inference" />
-        <item itemvalue="Python.webcam" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +241,21 @@
       <option name="project" value="LOCAL" />
       <updated>1572627356660</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="webcamImTest has the functionality that was used for the demonstration">
+      <created>1573426310810</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1573426310810</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added k-means discretization for recognition with and edge detection method  MNIST">
+      <created>1573757794884</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1573757794885</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,7 +276,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Currently Does not run. Having issues converting gray scale to a format appropriate for model." />
-    <option name="LAST_COMMIT_MESSAGE" value="Currently Does not run. Having issues converting gray scale to a format appropriate for model." />
+    <MESSAGE value="webcamImTest has the functionality that was used for the demonstration" />
+    <MESSAGE value="Added k-means discretization for recognition with and edge detection method  MNIST" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added k-means discretization for recognition with and edge detection method  MNIST" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -224,9 +289,19 @@
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/webcamImTest.py</url>
-          <line>72</line>
-          <option name="timeStamp" value="19" />
+          <url>file://$PROJECT_DIR$/src/digitFindTest.py</url>
+          <line>82</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/digitFindTest.py</url>
+          <line>120</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/svhn_nn/test_model.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

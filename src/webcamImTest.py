@@ -41,6 +41,13 @@ def webcam(use_cuda, model_path, mirror=False, ):
             # cv2.imshow('sampling', img)
             img_out = img
 
+            #ADD each blob here
+
+
+
+
+            # For EACH BLOB
+
             # need to convert img_out to a 28, 28, 1 binary image
             img_out = frameToBinary(img_out)
 
@@ -51,12 +58,34 @@ def webcam(use_cuda, model_path, mirror=False, ):
             _, argmax = output.max(-1)
 
             print(argmax)
+
+            #draw box
+
+
+            # end of FOR LOOP
+
             counter = 0
+
+
         counter = counter + 1
 
         if cv2.waitKey(1) == 27:
             break  # esc to quit
     cv2.destroyAllWindows()
+
+#def findDigit(img):
+    # convert to binary, segment image
+    # or get multiple image segments with possible numbers
+    # need blob detection or something to determine if number exists
+    # then apply directly
+
+
+
+
+
+
+
+
 
 def frameToBinary(img):
     # convert to binary, segment image
@@ -65,7 +94,6 @@ def frameToBinary(img):
     # then apply directly
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #img = cv2.equalizeHist(img)
     img = cv2.resize(img, (28,28))
     cv2.imshow('sampling', img)
     img = img.astype('float32')
@@ -75,6 +103,7 @@ def frameToBinary(img):
     img = img.reshape(28, 28, 1)
     cv2.imshow('sampling', img)
     return img
+
 
 def main():
     argparser = argparse.ArgumentParser(description='add args here')

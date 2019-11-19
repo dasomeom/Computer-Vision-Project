@@ -30,30 +30,33 @@ class Net(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+def main():
+    transform = transforms.Compose(
+        [transforms.ToTensor(),
+         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-
-testset = torchvision.datasets.SVHN(root='../../data', split='test', transform=transform)
-testloader = torch.utils.data.DataLoader(testset, batch_size=4,
-                                         shuffle=False, num_workers=2)
-
-
-PATH = './svhn_net.pth'
-net = Net()
-net.load_state_dict(torch.load(PATH))
+    testset = torchvision.datasets.SVHN(root='../../data', split='test', transform=transform)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=4,
+                                             shuffle=False, num_workers=2)
 
 
-correct = 0
-total = 0
-with torch.no_grad():
-    for data in testloader:
-        images, labels = data
-        outputs = net(images)
-        _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
+    PATH = './svhn_net.pth'
+    net = Net()
+    net.load_state_dict(torch.load(PATH))
 
-print('Accuracy of the network on the {0} test images: {1}'.format(total,
-    100 * correct / total))
+
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for data in testloader:
+            images, labels = data
+            outputs = net(images)
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    print('Accuracy of the network on the {0} test images: {1}'.format(total,
+        100 * correct / total))
+
+if __name__ == '__main__':
+    main()
