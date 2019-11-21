@@ -5,7 +5,7 @@ import torch
 import torchvision
 import torch.nn as nn
 import torch.nn.functional as F
-
+from src.detect_im import detect_digits
 
 
 import torch
@@ -93,7 +93,7 @@ def main():
         ret_val, img = cam.read()
         # img is an rgb array
         #cv2.imshow('my webcam', img)
-        img = img[80:400, 100:540]     #cropping for my webcam
+        #img = img[80:400, 100:540]     #cropping for my webcam
         #cv2.imshow('cropped', img)
         # add sampling rate
         if counter == samplingRate:
@@ -101,26 +101,21 @@ def main():
             img_out = img
 
             # ADD each blob here
-
+            images = detect_digits(img_out)
             # For EACH BLOB
-
-            img_out = preprocess(img_out)
-
-            img_out = transform(img_out)
-            img_out = img_out[None]
-            outputs = net(img_out)
-            _, predicted = torch.max(outputs.data, 1)
-            print(predicted)
             counter = 0
+            for img_out in images:
+                img_out = preprocess(img_out)
+            
+                img_out = transform(img_out)
+                img_out = img_out[None]
+                outputs = net(img_out)
+                _, predicted = torch.max(outputs.data, 1)
+                print(predicted)
         counter = counter + 1
-
-
-
-
-
-    outputs = net()
-    _, predicted = torch.max(outputs.data, 1)
-    print(predicted);
+        #outputs = net()
+        #_, predicted = torch.max(outputs.data, 1)
+        #print(predicted)
 
 
 
